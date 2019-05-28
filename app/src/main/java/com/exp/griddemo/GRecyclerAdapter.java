@@ -23,6 +23,7 @@ public class GRecyclerAdapter extends RecyclerView.Adapter<GRecyclerAdapter.GVie
     private Context context;
     private LinearLayout curVisibleLayout;//当前可见的layout
     private int curPosition = -1;
+    private int lastPosition = -1;//上次点击的 只有在同一行用得到
 
 
     public GRecyclerAdapter(List<GInfo> infoList, Context context) {
@@ -47,11 +48,20 @@ public class GRecyclerAdapter extends RecyclerView.Adapter<GRecyclerAdapter.GVie
         adapter.setOnItemClick(new OnItemClick() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onClick(GInfo gInfo) {
+            public void onClick(GInfo gInfo, int position) {
                 if (curPosition == i) { //是同一行的 直接更新数据
-                    gViewHolder.detailsLayout.setVisibility(View.VISIBLE);
+                    if (position == lastPosition) {
+                        if (gViewHolder.detailsLayout.getVisibility() == View.VISIBLE) {
+                            gViewHolder.detailsLayout.setVisibility(View.GONE);
+                        } else {
+                            gViewHolder.detailsLayout.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        gViewHolder.detailsLayout.setVisibility(View.VISIBLE);
+                    }
                     curVisibleLayout = gViewHolder.detailsLayout;
                     gViewHolder.datailsText.setText(gInfo.getName() + "---" + gInfo.getAge() + "---" + gInfo.getSex());
+                    lastPosition = position;
                 } else {
                     if (curVisibleLayout != null && curVisibleLayout.getVisibility() == View.VISIBLE) {
                         curVisibleLayout.setVisibility(View.GONE);
