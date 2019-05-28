@@ -1,0 +1,2 @@
+# GridDemo
+RecyclerView嵌套RecyclerView 点击item显示详情信息
