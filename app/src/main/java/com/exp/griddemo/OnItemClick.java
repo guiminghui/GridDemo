@@ -5,5 +5,5 @@ package com.exp.griddemo;
  * 邮箱:gmh.com@qq.com
  */
 public interface OnItemClick {
-    void onClick(GInfo gInfo);
+    void onClick(GInfo gInfo,int position);
 }

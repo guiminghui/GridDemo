@@ -6,4 +6,6 @@
     <color name="manBgColor">#FFEBCD</color>
     <color name="womanBgColor">#FFB5C5</color>
     <color name="datailsBgColor">#FF7F00</color>
+    <color name="titleBgColor">#CDC9C9</color>
+    <color name="title1BgColor">#CD9B1D</color>
 </resources>

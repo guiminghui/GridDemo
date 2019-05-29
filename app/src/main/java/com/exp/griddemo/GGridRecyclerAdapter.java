@@ -55,7 +55,7 @@ public class GGridRecyclerAdapter extends RecyclerView.Adapter<GGridRecyclerAdap
             @Override
             public void onClick(View view) {
                 if (onItemClick != null) {
-                    onItemClick.onClick(infoList.get(i));
+                    onItemClick.onClick(infoList.get(i),i);
                 }
             }
         });

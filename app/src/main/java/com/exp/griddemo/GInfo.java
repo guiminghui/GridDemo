@@ -1,10 +1,12 @@
 package com.exp.griddemo;
 
+import java.io.Serializable;
+
 /**
  * 作者: gmh by Administrator on 2019/5/28.
  * 邮箱:gmh.com@qq.com
  */
-public class GInfo {
+public class GInfo implements Serializable {
     private String name;
     private String sex;
     private int age;
@@ -37,5 +39,18 @@ public class GInfo {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"name\":\"")
+                .append(name).append('\"');
+        sb.append(",\"sex\":\"")
+                .append(sex).append('\"');
+        sb.append(",\"age\":")
+                .append(age);
+        sb.append('}');
+        return sb.toString();
     }
 }
