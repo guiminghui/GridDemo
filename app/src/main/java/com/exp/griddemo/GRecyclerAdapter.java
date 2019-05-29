@@ -1,4 +1,4 @@
-package com.exp.griddemo;
+﻿package com.exp.griddemo;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -34,7 +34,10 @@ public class GRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private Context context;
     private LinearLayout curVisibleLayout;//当前可见的layout
     private int curPosition = -1;
+
     private GInfo cruGInfo;//当前点击的
+
+
     private int lastPosition = -1;//上次点击的 只有在同一行用得到
 
 
@@ -67,6 +70,7 @@ public class GRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     @Override
+
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, @SuppressLint("RecyclerView") final int i) {
         if (viewHolder instanceof GViewHolder) {
             final GViewHolder gViewHolder = (GViewHolder) viewHolder;
@@ -111,6 +115,34 @@ public class GRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         gViewHolder.detailsLayout.setVisibility(View.VISIBLE);
                         curVisibleLayout = gViewHolder.detailsLayout;
                         gViewHolder.datailsText.setText(gInfo.getName() + "---" + gInfo.getAge() + "---" + gInfo.getSex());
+
+    public void onBindViewHolder(@NonNull final GViewHolder gViewHolder, final int i) {
+        RecyclerView itemRecyclerView = gViewHolder.itemRecyclerView;
+        itemRecyclerView.addItemDecoration(new SpaceItemDecoration(20));
+        itemRecyclerView.setLayoutManager(new GridLayoutManager(context, MainActivity.EachColumnNumber));
+        GGridRecyclerAdapter adapter = new GGridRecyclerAdapter(fixedGrouping2(infoList, MainActivity.EachColumnNumber).get(i), context);
+        itemRecyclerView.setAdapter(adapter);
+        adapter.setOnItemClick(new OnItemClick() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(GInfo gInfo, int position) {
+                if (curPosition == i) { //是同一行的 直接更新数据
+                    if (position == lastPosition) {
+                        if (gViewHolder.detailsLayout.getVisibility() == View.VISIBLE) {
+                            gViewHolder.detailsLayout.setVisibility(View.GONE);
+                        } else {
+                            gViewHolder.detailsLayout.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        gViewHolder.detailsLayout.setVisibility(View.VISIBLE);
+                    }
+                    curVisibleLayout = gViewHolder.detailsLayout;
+                    gViewHolder.datailsText.setText(gInfo.getName() + "---" + gInfo.getAge() + "---" + gInfo.getSex());
+                    lastPosition = position;
+                } else {
+                    if (curVisibleLayout != null && curVisibleLayout.getVisibility() == View.VISIBLE) {
+                        curVisibleLayout.setVisibility(View.GONE);
+
                     }
                     curPosition = i;
                 }
